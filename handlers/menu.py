@@ -50,11 +50,11 @@ async def sushi(message: types.Message):
 @menu_router.message(F.text.lower() == 'рамен')
 async def sushi(message: types.Message):
     kb = types.ReplyKeyboardRemove()
-    shi = FSInputFile('image/image1.jpg')
+    shi = FSInputFile('image/image2.jpg')
     await message.answer_photo(shi, reply_markup=kb)
 
 @menu_router.message(F.text.lower() == 'салаты')
 async def sushi(message: types.Message):
     kb = types.ReplyKeyboardRemove()
-    shi = FSInputFile('image/image2.jpg')
+    shi = FSInputFile('image/image1.jpg')
     await message.answer_photo(shi, reply_markup=kb)
