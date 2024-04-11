@@ -10,6 +10,9 @@ def start_keyboard():
             [
                 types.InlineKeyboardButton(text='Контакты', callback_data='contact'),
                 types.InlineKeyboardButton(text='Пожелания', callback_data='wish')
+            ],
+            [
+                types.InlineKeyboardButton(text='Оставить отзыв', callback_data='survey')
             ]
         ]
     )

@@ -18,4 +18,4 @@ async def contact(cb: types.CallbackQuery):
 
 @start_router.callback_query(F.data == 'wish')
 async def wish(cb: types.CallbackQuery):
-    await cb.message.answer('Какие нафиг пожелания, мы итак круто работаем!')
+    await cb.message.answer('Пожелания еще в разработке , извините...')
