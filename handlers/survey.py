@@ -1,6 +1,8 @@
 from aiogram import Router, F, types
+from aiogram.filters import Command
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
+from config import database
 
 
 survey_router = Router()
@@ -10,6 +12,13 @@ class BookSurvey(StatesGroup):
     age = State()
     star = State()
     capt = State()
+
+
+@survey_router.message(Command("stop"))
+@survey_router.message(F.text.lower() == "стоп")
+async def stop(message: types.Message, state: FSMContext):
+    await state.clear()
+    await message.answer("Спасибо за прохождение опроса!")
 
 
 @survey_router.callback_query(F.data == 'survey')
@@ -27,6 +36,12 @@ async def name(message: types.Message, state: FSMContext):
 
 @survey_router.message(BookSurvey.age)
 async def age(message: types.Message, state: FSMContext):
+
+    agetest = message.text
+    if int(agetest) < 10 or int(agetest) > 100:
+        await message.answer('Вы слишком малы или мертвы чтобы оставить отзыв.')
+        return
+
     kb = types.ReplyKeyboardMarkup(
         keyboard=[
             [
@@ -40,11 +55,7 @@ async def age(message: types.Message, state: FSMContext):
             ]],
         resize_keyboard=True
     )
-    age = message.text
-    if int(age) < 10 or int(age) > 100:
-        await message.answer('Вы слишком малы или мертвы чтобы оставить отзыв.')
-        return
-    await state.update_data(age=age)
+    await state.update_data(age=agetest)
     await state.set_state(BookSurvey.star)
     await message.answer('Поставьте нам оценку:', reply_markup=kb)
 
@@ -58,5 +69,11 @@ async def star(message: types.Message, state: FSMContext):
 @survey_router.message(BookSurvey.capt)
 async def capt(message: types.Message, state: FSMContext):
     await state.update_data(capt=message.text)
+    data = await state.get_data()
+    print('-', data)
+    await database.execute('INSERT INTO survey ('
+                           'name, age, rate, capt) VALUES ('
+                           '?, ?, ?, ?)',
+                           (data["name"], data["age"], data['star'], data['capt']))
     await message.answer('Мы отправили ваш отзыв!')
     await state.clear()
