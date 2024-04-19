@@ -62,8 +62,9 @@ async def age(message: types.Message, state: FSMContext):
 @survey_router.message(BookSurvey.star)
 async def star(message: types.Message, state: FSMContext):
     kb = types.ReplyKeyboardRemove()
+    stars = len(message.text) - 1
     await state.set_state(BookSurvey.capt)
-    await state.update_data(star=message.text)
+    await state.update_data(star=stars)
     await message.answer('Напишите что вам понравилось/не понравилось', reply_markup=kb)
 
 @survey_router.message(BookSurvey.capt)

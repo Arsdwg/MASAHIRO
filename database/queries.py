@@ -3,6 +3,6 @@ class Queries:
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     age INTEGER,
-    rate TEXT,
+    rate INTEGER NOT NULL CHECK (rate > 0 AND rate < 6),
     capt TEXT
     )'''
