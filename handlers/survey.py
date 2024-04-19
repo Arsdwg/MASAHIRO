@@ -76,5 +76,10 @@ async def capt(message: types.Message, state: FSMContext):
                            'name, age, rate, capt) VALUES ('
                            '?, ?, ?, ?)',
                            (data["name"], data["age"], data['star'], data['capt']))
-    await message.answer('Мы отправили ваш отзыв!')
+    await message.answer('Мы отправили ваш отзыв!'
+                         f'\nИмя - {data['name']}'
+                         f'\nВозраст - {data['age']}'
+                         f'\nОценка - {data['star']}'
+                         f'\nОтзыв - "{data['capt']}".'
+                         )
     await state.clear()
