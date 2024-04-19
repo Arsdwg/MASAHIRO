@@ -45,13 +45,13 @@ async def age(message: types.Message, state: FSMContext):
     kb = types.ReplyKeyboardMarkup(
         keyboard=[
             [
-                types.KeyboardButton(text='⭐️'),
-                types.KeyboardButton(text='⭐️⭐'),
-                types.KeyboardButton(text='⭐️⭐⭐')
+                types.KeyboardButton(text='⭐'),
+                types.KeyboardButton(text='⭐⭐'),
+                types.KeyboardButton(text='⭐⭐⭐')
             ],
             [
-                types.KeyboardButton(text='⭐️⭐⭐⭐'),
-                types.KeyboardButton(text='⭐️⭐⭐⭐⭐')
+                types.KeyboardButton(text='⭐⭐⭐⭐'),
+                types.KeyboardButton(text='⭐⭐⭐⭐⭐')
             ]],
         resize_keyboard=True
     )
@@ -62,7 +62,7 @@ async def age(message: types.Message, state: FSMContext):
 @survey_router.message(BookSurvey.star)
 async def star(message: types.Message, state: FSMContext):
     kb = types.ReplyKeyboardRemove()
-    stars = len(message.text) - 1
+    stars = len(message.text)
     await state.set_state(BookSurvey.capt)
     await state.update_data(star=stars)
     await message.answer('Напишите что вам понравилось/не понравилось', reply_markup=kb)
