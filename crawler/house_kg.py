@@ -21,7 +21,7 @@ class DomCrawler:
 
     def get_houses_link(self):
         html = Selector(self.page)
-        links = html.css('.listings-wrapper a::attr(href)').getall()
+        links = html.css('.title a::attr(href)').getall()
         full_links = list(map(lambda x: self.BASE_URL + x, links))
         return full_links[:10]
 
