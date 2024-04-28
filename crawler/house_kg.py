@@ -1,10 +1,6 @@
 import asyncio
 import httpx
 from parsel import Selector
-from aiogram import Router, F, types
-
-
-check_router = Router()
 
 
 class DomCrawler:
@@ -43,13 +39,7 @@ class DomCrawler:
         return all_links[:9]
 
 
-@check_router.callback_query(F.data == 'check')
-async def get_checked(cb: types.CallbackQuery):
-    await cb.answer()
-    check = DomCrawler()
-    test = await check.get_houses()
-    for link in test:
-        await cb.message.answer(link)
-
-
+if __name__ == '__main__':
+    scrap = DomCrawler()
+    asyncio.run(scrap.get_houses())
 
