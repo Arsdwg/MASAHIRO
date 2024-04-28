@@ -7,7 +7,7 @@ from handlers.start import start_router
 from handlers.menu import menu_router
 from handlers.help import help_router
 from handlers.survey import survey_router
-from crawler.house_kg import check_router
+from handlers.scrapper import check_router
 
 
 async def on_top(bot: Bot):
